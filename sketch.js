@@ -38,6 +38,23 @@ generateStone();
 
 ironMan.velocityY = ironMan.velocityY + 0.5;
 
+for(var i = 0 ; i< (stoneGroup).length ;i++){
+  var temp = (stoneGroup).get(i) ;
+  
+  if (temp.isTouching(ironMan)) {
+     ironMan.collide(temp);
+    }     
+  }
+
+  if(ironMan.x<20){
+    ironMan.x=20;
+  }
+
+  if(ironMan.y<100){
+    ironMan.y=100;
+  }
+  
+
 function generateStone() {
   if (frameCount % 100 === 0) {
     var stone = createSprite(1200,120,40,10);
