@@ -58,7 +58,7 @@ for(var i = 0 ; i< (stoneGroup).length ;i++){
 function generateStone() {
   if (frameCount % 100 === 0) {
     var stone = createSprite(1200,120,40,10);
-    stone.x = random(50,450);
+    stone.x = random(-50,750);
     stone.addImage(stoneImage);
     stone.scale = 1;
     stone.velocityY = 5;
