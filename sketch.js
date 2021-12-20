@@ -1,3 +1,4 @@
+//create variables
 var bg, backgroundImg;
 var stoneGroup, stoneImage;
 var diamondsGroup, diamondImage;
@@ -5,6 +6,7 @@ var diamondScore=0;
 var spikeGroup, spikeImage;
 
 function preload() {
+  //loading Images
   backgroundImg = loadImage("images/bg.jpg");
   ironManImage = loadImage("images/iron.png");
   stoneImage = loadImage("images/stone.png");
@@ -14,16 +16,20 @@ function preload() {
 
 function setup() {
   createCanvas(1000, 900);
+
+  //create background sprite
   bg = createSprite(580,500);
   bg.addImage(backgroundImg);
   bg.scale =2;
 
+  //create mario sprite
   ironMan = createSprite(200,505,20,50);
   ironMan.addImage(ironManImage);
   ironMan.scale=0.3;
   ironMan.debug=true;
   ironMan.setCollider("rectangle",100,0,200,400)
   
+  //create groups
   stoneGroup = new Group();
   diamondsGroup = new Group();
   spikeGroup = new Group();
@@ -31,6 +37,7 @@ function setup() {
 }
 
 function draw() {
+  //giving keys for ironman to move
   if (keyDown("up")) {
     ironMan.velocityY = -10;
   }
@@ -40,11 +47,13 @@ function draw() {
   if (keyDown("right")) {
     ironMan.x = ironMan.x + 5;
 }
-
+ //call the function to generate stones
 generateStone();
 
+//gravity
 ironMan.velocityY = ironMan.velocityY + 0.5;
 
+//make ironman collide on stones
 for(var i = 0 ; i< (stoneGroup).length ;i++){
   var temp = (stoneGroup).get(i) ;
   
@@ -53,6 +62,7 @@ for(var i = 0 ; i< (stoneGroup).length ;i++){
     }     
   }
 
+  //giving limitation to ironman
   if(ironMan.x<20){
     ironMan.x=20;
   }
@@ -61,20 +71,26 @@ for(var i = 0 ; i< (stoneGroup).length ;i++){
     ironMan.y=100;
   }
 
+  //call the function to generate diamonds
   generateDiamonds();
 
+  //make ironman collect diamonds
   for (var i = 0; i < diamondsGroup.length; i++) {
     var temp = diamondsGroup.get(i);
 
     if (temp.isTouching(ironMan)) {
+      //increase score when diamond is collected
       diamondScore++;
+      //destroy diamond once collected
       temp.destroy();
       temp = null;
     }
   }
 
+  //call the function to generate spikes
   generateSpike();
 
+  //if ironman collect spike than score reduces
   for (var i = 0; i < spikeGroup.length; i++) {
     var temp = spikeGroup.get(i);
 
@@ -85,11 +101,12 @@ for(var i = 0 ; i< (stoneGroup).length ;i++){
       
     }
   }
+  //making diamond score count
   textSize(25);
   fill("yellow")
   text("Diamond Colleted: "+  diamondScore +  400,50);
   
-
+//make function to generate stones
 function generateStone() {
   if (frameCount % 100 === 0) {
     var stone = createSprite(1200,120,40,10);
@@ -102,6 +119,7 @@ function generateStone() {
   }
 }
 
+//make function to generate diamonds
 function generateDiamonds() {
   if (frameCount % 100 === 0) {
     var diamond = createSprite(1200,120,40,10);
@@ -114,6 +132,7 @@ function generateDiamonds() {
   }
 }
 
+//make function to generate spikes
 function generateSpike() {
   if (frameCount % 100 === 0) {
     var spike = createSprite(1200,120,40,10);
